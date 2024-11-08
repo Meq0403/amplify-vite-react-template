@@ -37,7 +37,6 @@ function App() {
       </ul>
       <div>
         🥳 App successfully hosted. Try creating a new todo.
-        ***This is a test line to see if there is text being added to the website***
         <br />
         <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
           Review next step of this tutorial.
