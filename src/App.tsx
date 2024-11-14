@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { generateClient } from "aws-amplify/data";
+import { Link } from "react-router-dom"; 
+
+import UserPage from './UserPage.tsx'
 
 const client = generateClient<Schema>();
 
@@ -25,26 +28,16 @@ function App() {
   }
   
   return (
-    <main>
-      <h1>{user?.signInDetails?.loginId}'s todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li           
-            onClick={() => deleteTodo(todo.id)}
-            key={todo.id}>{todo.content}</li>
-        ))}
-      </ul>
+    <Router>
       <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        New test text
-        <br />
-        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-          Review next step of this tutorial.
-        </a>
-        <button onClick={signOut}>Sign out</button>
+        <nav>
+          <Link to="/userPage">Go to User Page</Link>
+        </nav>
+        <Switch>
+          <Route path="/userPage" component={UserPage} />
+        </Switch>
       </div>
-    </main>
+    </Router>
   );
 }
 
