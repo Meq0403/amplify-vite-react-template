@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { generateClient } from "aws-amplify/data";
+import Profile from './Profile';  // Import the new Profile component
 
 const client = generateClient<Schema>();
 
 function App() {
   const { user, signOut } = useAuthenticator();
- // const { signOut } = useAuthenticator();
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
 
   useEffect(() => {
@@ -21,30 +22,44 @@ function App() {
   }
   
   function deleteTodo(id: string) {
-    client.models.Todo.delete({ id })
+    client.models.Todo.delete({ id });
   }
-  
+
   return (
-    <main>
-      <h1>{user?.signInDetails?.loginId}'s todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li           
-            onClick={() => deleteTodo(todo.id)}
-            key={todo.id}>{todo.content}</li>
-        ))}
-      </ul>
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        Test text to see if this stupid thing works now haha going crazy
-        <br />
-        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-          Review next step of this tutorial.
-        </a>
-        <button onClick={signOut}>Sign out</button>
-      </div>
-    </main>
+    <Router>
+      <Routes>
+        {/* Main App Screen Route */}
+        <Route 
+          path="/" 
+          element={
+            <main>
+              <h1>{user?.signInDetails?.loginId}'s todos</h1>
+              <button onClick={createTodo}>+ new</button>
+              <ul>
+                {todos.map((todo) => (
+                  <li           
+                    onClick={() => deleteTodo(todo.id)}
+                    key={todo.id}>{todo.content}</li>
+                ))}
+              </ul>
+              <div>
+                🥳 App successfully hosted. Try creating a new todo.
+                Test text to see if this stupid thing works now haha going crazy
+                <br />
+                <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
+                  Review next step of this tutorial.
+                </a>
+                <button onClick={signOut}>Sign out</button>
+              </div>
+              <Link to="/profile" className="profile-link">Go to Profile</Link>
+            </main>
+          } 
+        />
+
+        {/* Profile Screen Route */}
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </Router>
   );
 }
 
