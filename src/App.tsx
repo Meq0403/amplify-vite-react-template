@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Link from 'react-router-dom';
 import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { generateClient } from "aws-amplify/data";
@@ -37,7 +36,8 @@ function App() {
         ))}
       </ul>
       <div>
-        Undid everything
+        🥳 App successfully hosted. Try creating a new todo.
+        idk anymore, please work maybe?
         <br />
         <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
           Review next step of this tutorial.
