@@ -8,33 +8,48 @@ const client = generateClient<Schema>();
 function App() {
   const { user, signOut } = useAuthenticator();
  // const { signOut } = useAuthenticator();
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
+  const [posts, setPosts] = useState<Array<Schema["Post"]["type"]>>([]); // Updated for "Post"
 
   useEffect(() => {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
-  }, []);
+  client.models.Post.observeQuery().subscribe({
+    next: (data) => setPosts([...data.items]), // Updated for "Post"
+  });
+}, []);
 
-  function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
-  }
+  function createPost() {
+  const postTitle = window.prompt("Enter post title:");
+  const postContent = window.prompt("Enter post content:");
   
-  function deleteTodo(id: string) {
-    client.models.Todo.delete({ id })
+  if (postTitle && postContent) {
+    client.models.Post.create({
+      title: postTitle,
+      content: postContent,
+      createdAt: new Date().toISOString(), // Optional: add a timestamp
+    });
+    console.log("Post created successfully!");
+  } else {
+    console.log("Post creation cancelled or invalid input.");
   }
+}
+  
+  new: function deletePost(id: string) {
+  client.models.Post.delete({ id });
+  console.log(Post with id ${id} deleted successfully!);
+}
   
   return (
     <main>
-      <h1>{user?.signInDetails?.loginId}'s todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li           
-            onClick={() => deleteTodo(todo.id)}
-            key={todo.id}>{todo.content}</li>
-        ))}
-      </ul>
+     <h1>{user?.signInDetails?.loginId}'s posts</h1> {/* Updated for "posts" */}
+<button onClick={createPost}>+ New Post</button>
+     new: <ul>
+  {posts.map((post) => (
+    <li 
+      onClick={() => deletePost(post.id)}
+      key={post.id}>
+      <strong>{post.title}</strong>: {post.content}
+    </li>
+  ))}
+</ul>
       <div>
         🥳 App successfully hosted. Try creating a new todo.
         idk anymore, please work maybe?
