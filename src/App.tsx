@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { generateClient } from "aws-amplify/data";
+import UserProfile from './UserProfile.tsx';
 
 const client = generateClient<Schema>();
 
@@ -112,6 +113,7 @@ async function uploadImageToS3(file, fileName) {
         </a>
         <button onClick={signOut}>Sign out</button>
       </div>
+     <button>Test</button>
     </main>
   );
 }
