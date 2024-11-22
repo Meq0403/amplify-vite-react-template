@@ -9,10 +9,21 @@ import '@aws-amplify/ui-react/styles.css';
 
 Amplify.configure(outputs);
 
+// ReactDOM.createRoot(document.getElementById('root')!).render(
+//   <React.StrictMode>
+//     <Authenticator.provider>
+//       <App />
+//     </Authenticator.provider>
+//   </React.StrictMode>
+// );
+
+
+function TestComponent() {
+  return <h1>Test Component Rendered</h1>;
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Authenticator>
-      <App />
-    </Authenticator>
+    <App />
   </React.StrictMode>
 );

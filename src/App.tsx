@@ -6,33 +6,42 @@ import { generateClient } from "aws-amplify/data";
 const client = generateClient<Schema>();
 
 function App() {
-  const { user, signOut } = useAuthenticator();
- // const { signOut } = useAuthenticator();
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
-
-  useEffect(() => {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
-    });
-  }, []);
+  const [todos, setTodos] = useState<Array<{ id: string; imageUrl: string }>>([
+    {
+      id: "1",
+      imageUrl: "https://via.placeholder.com/150", // Example placeholder image
+    },
+  ]);
 
   function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
+    const imageUrl = window.prompt("Enter the URL of the image for your todo");
+    if (imageUrl) {
+      const newTodo = { id: Date.now().toString(), imageUrl };
+      setTodos([...todos, newTodo]);
+    }
   }
-  
+
   function deleteTodo(id: string) {
-    client.models.Todo.delete({ id })
+    setTodos(todos.filter((todo) => todo.id !== id));
   }
-  
+
   return (
     <main>
-      <h1>{user?.signInDetails?.loginId}'s todos</h1>
+      <h1>Guest User's todos</h1>
       <button onClick={createTodo}>+ new</button>
       <ul>
         {todos.map((todo) => (
-          <li           
+          <li
             onClick={() => deleteTodo(todo.id)}
-            key={todo.id}>{todo.content}</li>
+            key={todo.id}
+            style={{ cursor: "pointer" }}
+          >
+            <img
+              src={todo.imageUrl}
+              alt="Todo"
+              style={{ maxWidth: "100px", maxHeight: "100px", objectFit: "cover" }}
+            />
+          </li>
         ))}
       </ul>
       <div>
@@ -41,7 +50,6 @@ function App() {
         <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
           Review next step of this tutorial.
         </a>
-        <button onClick={signOut}>Sign out</button>
       </div>
     </main>
   );
