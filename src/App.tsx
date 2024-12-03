@@ -7,45 +7,30 @@ import UserProfile from './UserProfile.tsx';
 const client = generateClient<Schema>();
 
 function App() {
-<<<<<<< HEAD
-  const [todos, setTodos] = useState<Array<{ id: string; imageUrl: string }>>([
-    {
-      id: "1",
-      imageUrl: "https://via.placeholder.com/150", // Example placeholder image
-    },
+  // const { user, signOut } = useAuthenticator();
+  const [posts, setPosts] = useState<Array<Schema["Post"]["type"]>>([
+    { id: "1", title: "Sample Post 1", content: "This is a hardcoded post.", createdAt: "2024-12-02", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm2-IiCQnnEHH1dk5HN2K60xrv8Wyu8VRW7Q&s" },
+    { id: "2", title: "Sample Post 2", content: "This is another hardcoded post.", createdAt: "2024-12-01", image: "" },
   ]);
-
-  function createTodo() {
-    const imageUrl = window.prompt("Enter the URL of the image for your todo");
-    if (imageUrl) {
-      const newTodo = { id: Date.now().toString(), imageUrl };
-      setTodos([...todos, newTodo]);
-    }
-  }
-
-  function deleteTodo(id: string) {
-    setTodos(todos.filter((todo) => todo.id !== id));
-=======
-  const { user, signOut } = useAuthenticator();
-  const [posts, setPosts] = useState<Array<Schema["Post"]["type"]>>([]); // Updated for "Post"
-
+  
    // Fetch posts and observe changes
-  useEffect(() => {
-    const subscription = client.models.Post.observeQuery().subscribe({
-      next: (data) => setPosts([...data.items]),
-      error: (err) => console.error("Error fetching posts:", err),
-    });
+  // useEffect(() => {
+  //   const subscription = client.models.Post.observeQuery().subscribe({
+  //     next: (data) => setPosts([...data.items]),
+  //     error: (err) => console.error("Error fetching posts:", err),
+  //   });
 
-    return () => subscription.unsubscribe(); // Cleanup subscription
-  }, []);
+  //   return () => subscription.unsubscribe(); // Cleanup subscription
+  // }, []);
   
    // Create a new post
-  async function createPost() {
-    const postTitle = window.prompt("Enter post title:");
-    const postContent = window.prompt("Enter post content:");
-    const postImage = window.prompt("Please provide an image URL (if any):");
+  // Create a new post and update state
+async function createPost() {
+  const postTitle = window.prompt("Enter post title:");
+  const postContent = window.prompt("Enter post content:");
+  const postImage = window.prompt("Please provide an image URL (if any):");
 
-    // Prompt user to upload an image
+  // Prompt user to upload an image
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
   fileInput.accept = 'image/*';
@@ -57,15 +42,21 @@ function App() {
       const fileName = `post-images/${Date.now()}-${file.name}`; // Unique file name
       const s3ImageUrl = await uploadImageToS3(file, fileName); // Upload the image to S3
 
-       // Now create the post with the image URL
+      // Now create the post with the image URL
       if (postTitle && postContent) {
         try {
-          await client.models.Post.create({
+          const newPost = {
             title: postTitle,
             content: postContent,
             createdAt: new Date().toISOString(),
             image: s3ImageUrl, // Store the image URL in the Post model
-          });
+          };
+
+          // Save to the database
+          const savedPost = await client.models.Post.create(newPost);
+
+          // Update the posts state directly
+          setPosts((prevPosts) => [...prevPosts, savedPost]); // Append new post to the list
           console.log("Post created successfully!");
         } catch (err) {
           console.error("Error creating post:", err);
@@ -75,9 +66,9 @@ function App() {
       }
     }
   };
-  
+
   fileInput.click();
-  }
+}
 
   
 // Function to upload image to S3 and return the URL
@@ -107,31 +98,11 @@ async function uploadImageToS3(file, fileName) {
     } catch (err) {
       console.error(`Error deleting post with id ${id}:`, err);
     }
->>>>>>> 370e4b9dd78cfa2256655b79024a527658f850e4
   }
-
+  
   return (
     <main>
-<<<<<<< HEAD
-      <h1>Guest User's todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li
-            onClick={() => deleteTodo(todo.id)}
-            key={todo.id}
-            style={{ cursor: "pointer" }}
-          >
-            <img
-              src={todo.imageUrl}
-              alt="Todo"
-              style={{ maxWidth: "100px", maxHeight: "100px", objectFit: "cover" }}
-            />
-          </li>
-        ))}
-      </ul>
-=======
-     <h1>{user?.signInDetails?.loginId}'s posts</h1> {/* Updated for "posts" */}
+     {/* <h1>{user?.signInDetails?.loginId}'s posts</h1> {} */}
 <button onClick={createPost}>+ New Post</button>
     <ul>
   {posts.map((post) => (
@@ -143,7 +114,6 @@ async function uploadImageToS3(file, fileName) {
     </li>
   ))}
 </ul>
->>>>>>> 370e4b9dd78cfa2256655b79024a527658f850e4
       <div>
         🥳 App successfully hosted. Try creating a new todo.
         idk anymore, please work maybe?
@@ -151,10 +121,20 @@ async function uploadImageToS3(file, fileName) {
         <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
           Review next step of this tutorial.
         </a>
+        {/* <button onClick={signOut}>Sign out</button> */}
       </div>
      <button>Test</button>
     </main>
   );
+  // return (
+  //   <div>
+  //     <h1>Hello World</h1>
+  //     <p>This is the main page content.</p>
+  //   </div>
+  // );
+
 }
+
+
 
 export default App;
