@@ -24,6 +24,9 @@ function TestComponent() {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    {/* <Authenticator> */}
+      <App />
+      {/* <UserProfile /> */}
+    {/* </Authenticator> */}
   </React.StrictMode>
 );
