@@ -1,3 +1,9 @@
 {
-  "type": "module"
+  "dependencies": {
+    "aws-cdk-lib": "^2.36.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.36.0"
+  }
 }
