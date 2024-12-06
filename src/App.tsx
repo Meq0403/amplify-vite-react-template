@@ -126,13 +126,6 @@ async function uploadImageToS3(file, fileName) {
      <button>Test</button>
     </main>
   );
-  // return (
-  //   <div>
-  //     <h1>Hello World</h1>
-  //     <p>This is the main page content.</p>
-  //   </div>
-  // );
-
 }
 
 
