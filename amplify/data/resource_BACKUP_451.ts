@@ -7,27 +7,16 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-   Post: a
-     .model({
-      title: a.string(), // Add a "title" field for the Post model
-      content: a.string(), // Content field for the Post model
-      createdAt: a.string(), // Add the "createdAt" field
-  })
-      .authorization(allow => [allow.owner()]),
+  Post: a
+    .model({
+      title: a.string(),
+      content: a.string(),
+      createdAt: a.string(),
+      image: a.string(), // New field to store the S3 image URL
+    })
+    .authorization(allow => [allow.owner()]),
 });
 
-export type Schema = ClientSchema<typeof schema>;
-
-export const data = defineData({
-  schema,
-  authorizationModes: {
-      defaultAuthorizationMode: 'userPool',
-    // API Key is used for a.allow.public() rules
-    apiKeyAuthorizationMode: {
-      expiresInDays: 30,
-    },
-  },
-});
 /*== STEP 2 ===============================================================
 Go to your frontend source code. From your client-side code, generate a
 Data client to make CRUDL requests to your table. (THIS SNIPPET WILL ONLY

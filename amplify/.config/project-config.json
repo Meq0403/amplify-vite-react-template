@@ -1,0 +1,48 @@
+{
+  "projectName": "MyDummyProject",
+  "version": "3.1",
+  "frontend": {
+    "frontend": "javascript",
+    "framework": "react",
+    "config": {
+      "SourceDir": "src",
+      "DistributionDir": "build",
+      "BuildCommand": "npm run build",
+      "StartCommand": "npm start"
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ],
+  "amplify": {
+    "serviceConfiguration": {
+      "categories": {
+        "api": {
+          "graphql": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+              "authConfig": {
+                "defaultAuthentication": {
+                  "authenticationType": "AMAZON_COGNITO_USER_POOLS"
+                }
+              },
+              "graphqlApiIdOutput": "dummyApiId",
+              "graphqlApiEndpointOutput": "https://dummyendpoint.appsync-api.dummy-region.amazonaws.com/graphql"
+            }
+          }
+        },
+        "storage": {
+          "s3": {
+            "service": "S3",
+            "providerPlugin": "awscloudformation",
+            "output": {
+              "BucketName": "dummy-bucket-name",
+              "Region": "us-east-1"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,13 +7,20 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
+<<<<<<< HEAD
    Post: a
      .model({
       title: a.string(), // Add a "title" field for the Post model
       content: a.string(), // Content field for the Post model
-      createdAt: a.string(), // Add the "createdAt" field
   })
       .authorization(allow => [allow.owner()]),
+=======
+  Todo: a
+    .model({
+      content: a.string(),
+    })
+      }).authorization(allow => [allow.owner()]),
+>>>>>>> 559d86cade47a4f9c82ec9cd0cbbe78fc942f8b0
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -28,6 +35,10 @@ export const data = defineData({
     },
   },
 });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 559d86cade47a4f9c82ec9cd0cbbe78fc942f8b0
 /*== STEP 2 ===============================================================
 Go to your frontend source code. From your client-side code, generate a
 Data client to make CRUDL requests to your table. (THIS SNIPPET WILL ONLY
