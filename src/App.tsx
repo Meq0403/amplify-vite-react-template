@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { generateClient } from "aws-amplify/data";
-import UserProfile from './UserProfile.tsx';
 
 // const client = generateClient<Schema>();
 
@@ -47,17 +46,17 @@ const client = mockClient;
 //testing code end ----
 
 function App() {
-  const [posts, setPosts] = useState([
-    { id: "1", title: "Sample Post 1", content: "This is a hardcoded post.", createdAt: "2024-12-02", image: "" },
-    { id: "2", title: "Sample Post 2", content: "This is another hardcoded post.", createdAt: "2024-12-01", image: "" },
-  ]);
+  // const { user, signOut } = useAuthenticator();
+  const [posts, setPosts] = useState<Array<Schema["Post"]["type"]>>([]);
 
+  // Fetch posts and observe changes
   useEffect(() => {
-    const subscription = client.models.Post.observeQuery().subscribe({
-      next: (data) => setPosts(data.items), // Update state with mock data
+    const subscription = client.models.Post.observeQuery({}).subscribe({
+      next: (data) => setPosts(data.items),
     });
     return () => subscription.unsubscribe(); // Cleanup subscription
   }, []);
+
 
   function createPost() {
     const postTitle = window.prompt("Enter post title:");
@@ -74,10 +73,15 @@ function App() {
     }
   }
 
-  function deletePost(id: string) {
-    setPosts(posts.filter((post) => post.id !== id)); // Remove post locally
-    client.models.Post.delete({ id }); // Mock backend call
-  }
+    // Delete a post
+    const deletePost = (id: string) => {
+      client.models.Post.delete({ id });
+      console.log(`Post with id ${id} deleted successfully!`);
+      setPosts(posts.filter((post) => post.id !== id)); // Remove post locally
+
+    };
+ 
+
 
   return (
     <div style={styles.container}>

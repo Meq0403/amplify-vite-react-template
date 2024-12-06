@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     {/* <Authenticator.provider> */}
       <App />
-    {/* </Authenticator.provider> */}
+    {/* </Authenticator> */}
   </React.StrictMode>
 );
 
