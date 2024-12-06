@@ -14,6 +14,7 @@ function App() {
   ]);
   
    // Fetch posts and observe changes
+<<<<<<< HEAD
   // useEffect(() => {
   //   const subscription = client.models.Post.observeQuery().subscribe({
   //     next: (data) => setPosts([...data.items]),
@@ -70,46 +71,48 @@ async function createPost() {
   fileInput.click();
 }
 
+=======
+  useEffect(() => {
+      client.models.Post.observeQuery().subscribe({
+    next: (data) => setPosts([...data.items]), // Updated for "Post"
+  });
+}, []);
   
-// Function to upload image to S3 and return the URL
-async function uploadImageToS3(file, fileName) {
-  const s3Storage = await import("aws-amplify").then((aws) => aws.Storage);
-
-  try {
-    // Upload image to S3
-    const uploadedFile = await s3Storage.put(fileName, file, {
-      contentType: file.type,
-    });
-
-    // Get the public URL of the uploaded file
-    const fileUrl = await s3Storage.get(uploadedFile.key, { level: "public" });
-    return fileUrl;
-  } catch (err) {
-    console.error("Error uploading image:", err);
-    return null;
-  }
-}
-  
- // Delete a post
-  async function deletePost(id: string) {
-    try {
-      await client.models.Post.delete({ id });
-      console.log(`Post with id ${id} deleted successfully!`);
-    } catch (err) {
-      console.error(`Error deleting post with id ${id}:`, err);
+   // Create a new post
+   function createPost() {
+    const postTitle = window.prompt("Enter post title:");
+    const postContent = window.prompt("Enter post content:");
+      if (postTitle && postContent) {
+      client.models.Post.create({
+        title: postTitle,
+        content: postContent,
+        createdAt: new Date().toISOString(), // Optional: add a timestamp
+      });
+      console.log("Post created successfully!");
+    } else {
+      console.log("Post creation cancelled or invalid input.");
     }
   }
+>>>>>>> e845fee298b18c8c3d1aadeddf44ba8d335f9039
+  
+  new: function deletePost(id: string) {
+  client.models.Post.delete({ id });
+  console.log(Post with id ${id} deleted successfully!);
+}
   
   return (
     <main>
+<<<<<<< HEAD
      {/* <h1>{user?.signInDetails?.loginId}'s posts</h1> {} */}
+=======
+         <h1>{user?.signInDetails?.loginId}'s posts</h1> {/* Updated for "posts" */}
+>>>>>>> e845fee298b18c8c3d1aadeddf44ba8d335f9039
 <button onClick={createPost}>+ New Post</button>
-    <ul>
+     new: <ul>
   {posts.map((post) => (
     <li 
       onClick={() => deletePost(post.id)}
-      key={post.id} // Ensure post.id is unique
-      >
+      key={post.id}>
       <strong>{post.title}</strong>: {post.content}
     </li>
   ))}
@@ -123,7 +126,6 @@ async function uploadImageToS3(file, fileName) {
         </a>
         {/* <button onClick={signOut}>Sign out</button> */}
       </div>
-     <button>Test</button>
     </main>
   );
 }
