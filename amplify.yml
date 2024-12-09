@@ -5,7 +5,7 @@ backend:
       commands:
         - npm install -g aws-cdk@latest  # Ensure the latest CDK CLI is installed
         - cdk --version                 # Log the version for debugging
-        - amplify pull --env staging --yes  # Replace 'staging' with your environment name
+        - amplify pull --appId d7jt6z7685vt --envName staging --yes
         - npm ci
         - npm run build
 frontend:
