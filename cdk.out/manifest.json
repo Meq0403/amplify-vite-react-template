@@ -11,21 +11,21 @@
     },
     "MyStack": {
       "type": "aws:cloudformation:stack",
-      "environment": "aws://unknown-account/unknown-region",
+      "environment": "aws://688567303007/us-east-2",
       "properties": {
         "templateFile": "MyStack.template.json",
         "terminationProtection": false,
         "validateOnSynth": false,
-        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
-        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/524a9c6367b70372e0fdebd8d0675ffefacc0b74a0cb0e58f109c05f6a5a744c.json",
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::688567303007:role/cdk-hnb659fds-deploy-role-688567303007-us-east-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::688567303007:role/cdk-hnb659fds-cfn-exec-role-688567303007-us-east-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-688567303007-us-east-2/57181b77a92fc5900dacdc7e1c4699b7fc2c60479adcecd3b23d795c7a6c3f54.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
           "MyStack.assets"
         ],
         "lookupRole": {
-          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "arn": "arn:${AWS::Partition}:iam::688567303007:role/cdk-hnb659fds-lookup-role-688567303007-us-east-2",
           "requiresBootstrapStackVersion": 8,
           "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
         }
@@ -90,12 +90,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "CDKMetadata"
-          }
-        ],
-        "/MyStack/CDKMetadata/Condition": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CDKMetadataAvailable"
           }
         ],
         "/MyStack/BootstrapVersion": [

@@ -1,11 +1,14 @@
 #!/usr/bin/env node
-const cdk = require('aws-cdk-lib'); // CommonJS import
-const { MyStack } = require('./my-stack.cjs'); // Import from CommonJS
+const cdk = require('aws-cdk-lib');
+const { MyStack } = require('./my-stack.cjs'); // Import the stack
 
-// Initialize the CDK app
+// Initialize the CDK application
 const app = new cdk.App();
 
-// Add a stack to the app
+// Define the stack with AWS account and region
 new MyStack(app, 'MyStack', {
-  // Optional stack properties
+  env: {
+    account: '688567303007', 
+    region: 'us-east-2',  
+  },
 });
