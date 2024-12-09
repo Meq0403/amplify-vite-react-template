@@ -5,5 +5,9 @@
   },
   "devDependencies": {
     "aws-cdk": "^2.36.0"
+  },
+    "type": "commonjs"
+      
   }
-}
+  
+
