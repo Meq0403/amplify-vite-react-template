@@ -23,6 +23,7 @@ class MyStack extends cdk.Stack {
       sources: [s3deploy.Source.asset('./dist')], // Path to the generated build folder
       destinationBucket: bucket,
     });
+    
   }
 }
 
